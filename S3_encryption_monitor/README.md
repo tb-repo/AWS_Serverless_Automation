@@ -23,6 +23,17 @@ Enhance AWS security posture by automatically auditing all S3 buckets in your ac
    ```
    This deletes the explicit encryption configuration on that bucket, allowing the Boto3 script to flag it as unencrypted.
 
+<details open>
+<summary>📸 Click to view S3 Bucket Setup & CloudShell Screenshots</summary>
+
+| S3 Bucket Setup | S3 Status & CLI Command |
+|:---:|:---:|
+| ![S3 Creation 1](./images/S3_creation1.png) | ![S3 Creation 2](./images/S3_creation2.png) |
+| ![S3 Status CLI 1](./images/S3_status_cli1.png) | ![S3 Status CLI 2](./images/S3_status_cli2.png) |
+| ![S3 Status CLI 3](./images/S3_status_cli3.png) | |
+
+</details>
+
 ---
 
 ### Step 2: Create the IAM Role for Lambda
@@ -31,6 +42,16 @@ Enhance AWS security posture by automatically auditing all S3 buckets in your ac
 3. Choose **AWS service** -> **Lambda** as the trust use case. Click **Next**.
 4. Search for and attach the policy **`AmazonS3ReadOnlyAccess`**. Click **Next**.
 5. Name the role `LambdaS3ReadAccessRole` and click **Create role**.
+
+<details open>
+<summary>📸 Click to view IAM Role Configuration Screenshots</summary>
+
+| Trust Policy Setup | Policy Assignment & Review |
+|:---:|:---:|
+| ![IAM Role 1](./images/IAM_Role1.png) | ![IAM Role 2](./images/IAM_Role2.png) |
+| ![IAM Role 3](./images/IAM_Role3.png) | ![IAM Role 4](./images/IAM_Role4.png) |
+
+</details>
 
 ---
 
@@ -47,6 +68,16 @@ Enhance AWS security posture by automatically auditing all S3 buckets in your ac
    - Replace the default code with the code provided in [lambda_function.py](./lambda_function.py).
    - Click **Deploy** to save and compile.
 
+<details open>
+<summary>📸 Click to view Lambda Function Setup Screenshots</summary>
+
+| Lambda Function Setup | Code Deployment |
+|:---:|:---:|
+| ![Lambda 1](./images/Lambda1.png) | ![Lambda 2](./images/Lambda2.png) |
+| ![Lambda 3](./images/Lambda3.png) | ![Lambda 4](./images/Lambda4.png) |
+
+</details>
+
 ---
 
 ### Step 4: Test and Verify the Audit
@@ -60,13 +91,22 @@ Enhance AWS security posture by automatically auditing all S3 buckets in your ac
    - The status should show **Succeeded**.
    - The log output will display a summary listing which buckets are encrypted and which ones are unencrypted (the one you targeted in Step 1).
 
+<details open>
+<summary>📸 Click to view Lambda Test & Verification Screenshots</summary>
+
+| Test Run Execution | Output Verification |
+|:---:|:---:|
+| ![Lambda Test 1](./images/Lambda_test1.png) | ![Lambda Test 2](./images/Lambda_test2.png) |
+| ![Lambda Test 3](./images/Lambda_test3.png) | |
+
+</details>
+
 ---
 
-## Example Screenshots
+## Overview
 
-Make sure to capture and save the following screenshots in this directory (e.g., in an `images/` subfolder):
-
-1. **`01_cloudshell_encryption_delete.png`**: The CloudShell console showing the `aws s3api delete-bucket-encryption` command execution.
-2. **`02_lambda_code_deployed.png`**: The Lambda console showing the code successfully deployed.
-3. **`03_lambda_test_results.png`**: The Lambda execution results showing the unencrypted bucket highlighted under **Audit Summary**.
-4. **`04_cloudwatch_audit_logs.png`**: The CloudWatch Logs showing the output of your print statements for each audited bucket.
+All step-by-step screenshots are embedded inside each respective section above. You can expand the dropdown panels under each step to see:
+- **Step 1**: S3 bucket creation and disabling encryption on one bucket using AWS CloudShell to simulate an unencrypted bucket.
+- **Step 2**: Configuration of the IAM role with `AmazonS3ReadOnlyAccess` policy to allow Lambda to list S3 buckets.
+- **Step 3**: Lambda function creation, code deployment, and environment settings.
+- **Step 4**: Testing the Lambda function and auditing the encryption status results.
