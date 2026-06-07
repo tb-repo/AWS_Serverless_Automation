@@ -20,17 +20,12 @@ Set up an automated alert system that monitors database item changes in Amazon D
 
 <details open>
 <summary>📸 Step 1 Screenshots (DynamoDB Table & Stream Setup)</summary>
-<br>
 
-#### Table Creation
-<img src="./images/DynamoDB_CreateTable1.png" alt="Create Table 1" width="100%">
-<img src="./images/DynamoDB_CreateTable2.png" alt="Create Table 2" width="100%">
-<img src="./images/DynamoDB_CreateTable3.png" alt="Create Table 3" width="100%">
-
-#### Enable DynamoDB Stream
-<img src="./images/DynamoDB_ExportStream1.png" alt="Export Stream 1" width="100%">
-<img src="./images/DynamoDB_ExportStream2.png" alt="Export Stream 2" width="100%">
-<img src="./images/DynamoDB_ExportStream3.png" alt="Export Stream 3" width="100%">
+| | |
+|:---:|:---:|
+| ![Create Table 1](./images/DynamoDB_CreateTable1.png) | ![Create Table 2](./images/DynamoDB_CreateTable2.png) |
+| ![Create Table 3](./images/DynamoDB_CreateTable3.png) | ![Export Stream 1](./images/DynamoDB_ExportStream1.png) |
+| ![Export Stream 2](./images/DynamoDB_ExportStream2.png) | ![Export Stream 3](./images/DynamoDB_ExportStream3.png) |
 
 </details>
 
@@ -48,19 +43,13 @@ Set up an automated alert system that monitors database item changes in Amazon D
 
 <details open>
 <summary>📸 Step 2 Screenshots (SNS Topic & Subscription)</summary>
-<br>
 
-#### SNS Topic Creation
-<img src="./images/SNS_Create1.png" alt="SNS Create 1" width="100%">
-<img src="./images/SNS_Create2.png" alt="SNS Create 2" width="100%">
-
-#### Subscription Setup & Confirmation
-<img src="./images/SNS_Subscription1.png" alt="SNS Subscription 1" width="100%">
-<img src="./images/SNS_Subscription2.png" alt="SNS Subscription 2" width="100%">
-<img src="./images/SNS_Subscription3.png" alt="SNS Subscription 3" width="100%">
-<img src="./images/SNS_Subscription4.png" alt="SNS Subscription 4" width="100%">
-<img src="./images/SNS_Subscription5.png" alt="SNS Subscription 5" width="100%">
-<img src="./images/SNS_Subscription6.png" alt="SNS Subscription 6" width="100%">
+| | |
+|:---:|:---:|
+| ![SNS Create 1](./images/SNS_Create1.png) | ![SNS Create 2](./images/SNS_Create2.png) |
+| ![SNS Subscription 1](./images/SNS_Subscription1.png) | ![SNS Subscription 2](./images/SNS_Subscription2.png) |
+| ![SNS Subscription 3](./images/SNS_Subscription3.png) | ![SNS Subscription 4](./images/SNS_Subscription4.png) |
+| ![SNS Subscription 5](./images/SNS_Subscription5.png) | ![SNS Subscription 6](./images/SNS_Subscription6.png) |
 
 </details>
 
@@ -92,15 +81,15 @@ Set up an automated alert system that monitors database item changes in Amazon D
                ],
                "Resource": "<your-dynamodb-stream-arn>"
            },
-           {
-               "Effect": "Allow",
-               "Action": [
-                   "logs:CreateLogGroup",
-                   "logs:CreateLogStream",
-                   "logs:PutLogEvents"
-               ],
-               "Resource": "*"
-           }
+            {
+                  "Effect": "Allow",
+                  "Action": [
+                     "logs:CreateLogGroup",
+                     "logs:CreateLogStream",
+                     "logs:PutLogEvents"
+                  ],
+                  "Resource": "*"
+            }
        ]
    }
    ```
@@ -108,17 +97,13 @@ Set up an automated alert system that monitors database item changes in Amazon D
 
 <details open>
 <summary>📸 Step 3 Screenshots (IAM Role for Lambda)</summary>
-<br>
 
-#### Role & Custom Policy Configuration
-<img src="./images/IAMRole1.png" alt="IAM Role 1" width="100%">
-<img src="./images/IAMRole2.png" alt="IAM Role 2" width="100%">
-<img src="./images/IAMRole3.png" alt="IAM Role 3" width="100%">
-<img src="./images/IAMRole4.png" alt="IAM Role 4" width="100%">
-<img src="./images/IAMRole5.png" alt="IAM Role 5" width="100%">
-<img src="./images/IAMRole6.png" alt="IAM Role 6" width="100%">
-<img src="./images/IAMRole7.png" alt="IAM Role 7" width="100%">
-<img src="./images/IAMRole8.png" alt="IAM Role 8" width="100%">
+| | |
+|:---:|:---:|
+| ![IAM Role 1](./images/IAMRole1.png) | ![IAM Role 2](./images/IAMRole2.png) |
+| ![IAM Role 3](./images/IAMRole3.png) | ![IAM Role 4](./images/IAMRole4.png) |
+| ![IAM Role 5](./images/IAMRole5.png) | ![IAM Role 6](./images/IAMRole6.png) |
+| ![IAM Role 7](./images/IAMRole7.png) | ![IAM Role 8](./images/IAMRole8.png) |
 
 </details>
 
@@ -145,17 +130,13 @@ Set up an automated alert system that monitors database item changes in Amazon D
 
 <details open>
 <summary>📸 Step 4 Screenshots (Lambda Function & Trigger Configuration)</summary>
-<br>
 
-#### Lambda Creation & Env Variables
-<img src="./images/Lambda1.png" alt="Lambda 1" width="100%">
-<img src="./images/Lambda2.png" alt="Lambda 2" width="100%">
-<img src="./images/Lambda3.png" alt="Lambda 3" width="100%">
-<img src="./images/Lambda4.png" alt="Lambda 4" width="100%">
-<img src="./images/Lambda5.png" alt="Lambda 5" width="100%">
-<img src="./images/Lambda6.png" alt="Lambda 6" width="100%">
-<img src="./images/Lambda7.png" alt="Lambda 7" width="100%">
-<img src="./images/Lambda8.png" alt="Lambda 8" width="100%">
+| | |
+|:---:|:---:|
+| ![Lambda 1](./images/Lambda1.png) | ![Lambda 2](./images/Lambda2.png) |
+| ![Lambda 3](./images/Lambda3.png) | ![Lambda 4](./images/Lambda4.png) |
+| ![Lambda 5](./images/Lambda5.png) | ![Lambda 6](./images/Lambda6.png) |
+| ![Lambda 7](./images/Lambda7.png) | ![Lambda 8](./images/Lambda8.png) |
 
 </details>
 
@@ -178,24 +159,15 @@ Set up an automated alert system that monitors database item changes in Amazon D
 
 <details open>
 <summary>📸 Step 5 Screenshots (Testing & Verification)</summary>
-<br>
 
-#### DynamoDB Operations
-<img src="./images/DynamoDB_CreateItem1.png" alt="Create Item 1" width="100%">
-<img src="./images/DynamoDB_CreateItem2.png" alt="Create Item 2" width="100%">
-<img src="./images/DynamoDB_CreateItem3.png" alt="Create Item 3" width="100%">
-<img src="./images/DynamoDB_CreateItem4.png" alt="Create Item 4" width="100%">
-
-#### Lambda Execution Verification (Logs & Triggers)
-<img src="./images/LambdaExecution1.png" alt="Lambda Execution 1" width="100%">
-<img src="./images/LambdaExecution2.png" alt="Lambda Execution 2" width="100%">
-<img src="./images/LambdaExecution3.png" alt="Lambda Execution 3" width="100%">
-<img src="./images/LambdaExecution4.png" alt="Lambda Execution 4" width="100%">
-
-#### Email Alerts Received
-<img src="./images/Email_alert1.png" alt="Email Alert 1" width="100%">
-<img src="./images/Email_alert2.png" alt="Email Alert 2" width="100%">
-<img src="./images/Email_alert3.png" alt="Email Alert 3" width="100%">
+| | |
+|:---:|:---:|
+| ![Create Item 1](./images/DynamoDB_CreateItem1.png) | ![Create Item 2](./images/DynamoDB_CreateItem2.png) |
+| ![Create Item 3](./images/DynamoDB_CreateItem3.png) | ![Create Item 4](./images/DynamoDB_CreateItem4.png) |
+| ![Lambda Execution 1](./images/LambdaExecution1.png) | ![Lambda Execution 2](./images/LambdaExecution2.png) |
+| ![Lambda Execution 3](./images/LambdaExecution3.png) | ![Lambda Execution 4](./images/LambdaExecution4.png) |
+| ![Email Alert 1](./images/Email_alert1.png) | ![Email Alert 2](./images/Email_alert2.png) |
+| ![Email Alert 3](./images/Email_alert3.png) | |
 
 </details>
 
