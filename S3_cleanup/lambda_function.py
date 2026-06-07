@@ -2,29 +2,80 @@ import boto3
 from datetime import datetime, timezone, timedelta
 import os
 
+def get_case_insensitive(data, keys_to_check):
+    """Search for keys case-insensitively in a dictionary or dictionary-like object."""
+    if not data:
+        return None
+    data_lower = {str(k).lower(): v for k, v in data.items()}
+    for key in keys_to_check:
+        lower_key = key.lower()
+        if lower_key in data_lower:
+            return data_lower[lower_key]
+    return None
+
+def list_all_objects(s3, bucket_name):
+    """List all objects in the S3 bucket and return their keys."""
+    try:
+        keys = []
+        paginator = s3.get_paginator('list_objects_v2')
+        page_iterator = paginator.paginate(Bucket=bucket_name)
+        for page in page_iterator:
+            if 'Contents' in page:
+                for obj in page['Contents']:
+                    keys.append(obj['Key'])
+        return keys
+    except Exception as e:
+        print(f"Error listing files in bucket '{bucket_name}': {str(e)}")
+        return None
+
 def lambda_handler(event, context):
-    # Fetch bucket name from environment variables
-    bucket_name = os.environ.get('BUCKET_NAME')
+    # Ensure event is a dictionary safely
+    if not isinstance(event, dict):
+        event = {}
+        
+    # Fetch bucket name case-insensitively
+    bucket_keys = ['bucket_name', 'bucket', 'bucketname']
+    bucket_name = get_case_insensitive(event, bucket_keys) or get_case_insensitive(dict(os.environ), bucket_keys)
     
     if not bucket_name:
-        print("Error: BUCKET_NAME environment variable is not set.")
+        print("Error: Bucket name is not set in event payload or environment variables.")
         return {
             'statusCode': 400,
-            'body': 'BUCKET_NAME environment variable is missing.'
+            'body': 'Bucket name is missing.'
         }
         
     s3 = boto3.client('s3')
     
-    # Calculate cutoff time (30 days ago)
+    # Fetch retention period (in days) case-insensitively, defaulting to 30
     retention_days = 30
+    retention_keys = ['retention_days', 'retention_period', 'retention', 'retentionperiod', 'retentiondays']
+    retention_val = get_case_insensitive(event, retention_keys) or get_case_insensitive(dict(os.environ), retention_keys)
+    
+    if retention_val is not None:
+        try:
+            retention_days = int(retention_val)
+        except ValueError:
+            print(f"Warning: Invalid retention period value '{retention_val}'. Falling back to default: {retention_days} days.")
+            
     cutoff_time = datetime.now(timezone.utc) - timedelta(days=retention_days)
     
     print(f"Starting cleanup for bucket: '{bucket_name}'")
+    print(f"Retention period: {retention_days} days")
     print(f"Deleting files created before: {cutoff_time}")
     
     deleted_objects = []
     
     try:
+        # List files before deletion
+        print("Files in bucket BEFORE cleanup:")
+        initial_files = list_all_objects(s3, bucket_name)
+        if initial_files is not None:
+            if initial_files:
+                for key in initial_files:
+                    print(f"  - {key}")
+            else:
+                print("  (No files found)")
+        
         # Paginate to handle buckets with large numbers of files
         paginator = s3.get_paginator('list_objects_v2')
         page_iterator = paginator.paginate(Bucket=bucket_name)
@@ -53,6 +104,16 @@ def lambda_handler(event, context):
             
         print(f"Cleanup complete. Total objects deleted: {len(deleted_objects)}")
         
+        # List files after deletion
+        print("Files in bucket AFTER cleanup:")
+        remaining_files = list_all_objects(s3, bucket_name)
+        if remaining_files is not None:
+            if remaining_files:
+                for key in remaining_files:
+                    print(f"  - {key}")
+            else:
+                print("  (No files remaining)")
+                
         return {
             'statusCode': 200,
             'body': {
