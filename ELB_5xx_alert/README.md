@@ -43,7 +43,6 @@ Set up an automated system that checks the CloudWatch metrics of an Elastic Load
 | ![SNS Topic 1](./images/SNS_Topic1.png) | ![SNS Topic 2](./images/SNS_Topic2.png) |
 | ![SNS Subscription 1](./images/SNS_Subscription1.png) | ![SNS Subscription 2](./images/SNS_Subscription2.png) |
 | ![SNS Subscription 3](./images/SNS_Subscription3.png) | ![SNS Subscription 4](./images/SNS_Subscription4.png) |
-| ![Email Validation](./images/Email_Validation.png) | |
 
 </details>
 
@@ -108,6 +107,15 @@ Set up an automated system that checks the CloudWatch metrics of an Elastic Load
    - **Schedule expression**: `rate(5 minutes)` (triggers the Lambda every 5 minutes)
 4. Click **Add**.
 
+<details open>
+<summary>📸 Step 5 Screenshots (EventBridge Scheduled Trigger)</summary>
+
+| | |
+|:---:|:---:|
+| ![Lambda 5](./images/Lambda5.png) | ![Lambda 6](./images/Lambda6.png) |
+
+</details>
+
 ---
 
 ### Step 6: Test and Simulate 5xx Errors Spike
@@ -125,6 +133,14 @@ Since you won't easily have 5 real 5xx errors on your test load balancer, you ca
    - This will force the script to simulate 15 errors and send the email notification.
    - Once tested, revert the line back to `error_sum = 0.0` and deploy.
 
+<details open>
+<summary>📸 Step 6 Screenshot Alert Recived as per the schedule - every 5 mins</summary>
+
+| | |
+|:---:|:---:|
+|![Email Validation](./images/Email_Validation.png) | ![Email Validation2](./images/Email_Validation2.png) |
+
+</details>
 ---
 
 ## Example Screenshots Gallery
