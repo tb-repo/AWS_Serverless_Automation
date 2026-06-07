@@ -12,7 +12,7 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
 2. If you do not have any running or stopped instances, launch a new free-tier instance (e.g., `t2.micro` running Amazon Linux).
 3. Keep it running or stopped. Note down the **Instance ID** (e.g., `i-0abcdef123456789f`).
 
-<details>
+<details open>
 <summary>📸 Click to view EC2 Instance Setup Screenshots</summary>
 
 | Launching Instance | Configuring Instance |
@@ -30,7 +30,7 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
 2. Select **Topics** -> Create a standard topic (e.g., `EC2StateAlertTopic`) or reuse an existing one.
 3. Ensure your email is subscribed and status is **Confirmed**.
 
-<details>
+<details open>
 <summary>📸 Click to view SNS Topic & Subscription Setup Screenshots</summary>
 
 | SNS Topic Setup | SNS Subscription Setup |
@@ -52,7 +52,7 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
    - CloudWatch Logs write access (`logs:CreateLogGroup`, `logs:CreateLogStream`, `logs:PutLogEvents`).
 4. Name the role `LambdaEC2SNSRole` and click **Create role**.
 
-<details>
+<details open>
 <summary>📸 Click to view IAM Role Configuration Screenshots</summary>
 
 | Policy Definition | Role Creation |
@@ -79,7 +79,7 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
    - **Value**: Your actual SNS Topic ARN.
 6. Click **Save**.
 
-<details>
+<details open>
 <summary>📸 Click to view Lambda Function Configuration Screenshots</summary>
 
 | Lambda Function Setup | Environment Variables |
@@ -112,7 +112,7 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
    - **Function**: `EC2StateMonitor`
 6. Click **Next**, review the configuration, and click **Create rule**.
 
-<details>
+<details open>
 <summary>📸 Click to view EventBridge Rule Setup Screenshots</summary>
 
 | EventBridge Rule Creation | Targets & Settings |
@@ -138,7 +138,7 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
    - The time of the state transition.
 6. Verify the execution prints by checking your Lambda's logs in **CloudWatch**.
 
-<details>
+<details open>
 <summary>📸 Click to view Testing & State Verification Screenshots</summary>
 
 | Testing & Transition | Verification & Logs |
