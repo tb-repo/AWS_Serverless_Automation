@@ -12,12 +12,35 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
 2. If you do not have any running or stopped instances, launch a new free-tier instance (e.g., `t2.micro` running Amazon Linux).
 3. Keep it running or stopped. Note down the **Instance ID** (e.g., `i-0abcdef123456789f`).
 
+<details>
+<summary>📸 Click to view EC2 Instance Setup Screenshots</summary>
+
+| Launching Instance | Configuring Instance |
+|:---:|:---:|
+| ![EC2 Creation 1](./images/EC2_Creation1.png) | ![EC2 Creation 2](./images/EC2_Creation2.png) |
+| ![EC2 Creation 3](./images/EC2_Creation3.png) | ![EC2 Creation 4](./images/EC2_Creation4.png) |
+| ![EC2 Creation 5](./images/EC2_Creation5.png) | ![EC2 Creation 6](./images/EC2_Creation6.png) |
+
+</details>
+
 ---
 
 ### Step 2: Create or Reuse the SNS Topic
 1. Navigate to the **SNS Console**.
 2. Select **Topics** -> Create a standard topic (e.g., `EC2StateAlertTopic`) or reuse an existing one.
 3. Ensure your email is subscribed and status is **Confirmed**.
+
+<details>
+<summary>📸 Click to view SNS Topic & Subscription Setup Screenshots</summary>
+
+| SNS Topic Setup | SNS Subscription Setup |
+|:---:|:---:|
+| ![SNS Topic 1](./images/SNS_Topic1.png) | ![SNS Subscription 1](./images/SNS_Subscription1.png) |
+| ![SNS Topic 2](./images/SNS_Topic2.png) | ![SNS Subscription 2](./images/SNS_Subscription2.png) |
+| ![SNS Subscription 3](./images/SNS_Subscription3.png) | ![SNS Subscription 4](./images/SNS_Subscription4.png) |
+| ![SNS Subscription 5](./images/SNS_Subscription5.png) | ![SNS Subscription 6](./images/SNS_Subscription6.png) |
+
+</details>
 
 ---
 
@@ -28,6 +51,18 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
    - `sns:Publish`
    - CloudWatch Logs write access (`logs:CreateLogGroup`, `logs:CreateLogStream`, `logs:PutLogEvents`).
 4. Name the role `LambdaEC2SNSRole` and click **Create role**.
+
+<details>
+<summary>📸 Click to view IAM Role Configuration Screenshots</summary>
+
+| Policy Definition | Role Creation |
+|:---:|:---:|
+| ![IAM Policy 1](./images/IAM_Policy1.png) | ![IAM Policy 2](./images/IAM_Policy2.png) |
+| ![IAM Policy 3](./images/IAM_Policy3.png) | ![IAM Policy 4](./images/IAM_Policy4.png) |
+| ![IAM Policy 5](./images/IAM_Policy5.png) | ![IAM Policy 6](./images/IAM_Policy6.png) |
+| ![IAM Policy 7](./images/IAM_Policy7.png) | |
+
+</details>
 
 ---
 
@@ -43,6 +78,17 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
    - **Key**: `SNS_TOPIC_ARN`
    - **Value**: Your actual SNS Topic ARN.
 6. Click **Save**.
+
+<details>
+<summary>📸 Click to view Lambda Function Configuration Screenshots</summary>
+
+| Lambda Function Setup | Environment Variables |
+|:---:|:---:|
+| ![Lambda 1](./images/Lambda1.png) | ![Lambda 2](./images/Lambda2.png) |
+| ![Lambda 3](./images/Lambda3.png) | ![Lambda 4](./images/Lambda4.png) |
+| ![Lambda 5](./images/Lambda5.png) | |
+
+</details>
 
 ---
 
@@ -66,6 +112,19 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
    - **Function**: `EC2StateMonitor`
 6. Click **Next**, review the configuration, and click **Create rule**.
 
+<details>
+<summary>📸 Click to view EventBridge Rule Setup Screenshots</summary>
+
+| EventBridge Rule Creation | Targets & Settings |
+|:---:|:---:|
+| ![EventBridge 1](./images/EventBridge1.png) | ![EventBridge 2](./images/EventBridge2.png) |
+| ![EventBridge 3](./images/EventBridge3.png) | ![EventBridge 4](./images/EventBridge4.png) |
+| ![EventBridge 5](./images/EventBridge5.png) | ![EventBridge 6](./images/EventBridge6.png) |
+| ![EventBridge 7](./images/EventBridge7.png) | ![EventBridge 8](./images/EventBridge8.png) |
+| ![EventBridge 9](./images/EventBridge9.png) | |
+
+</details>
+
 ---
 
 ### Step 6: Test and Verify
@@ -79,12 +138,25 @@ Automatically monitor EC2 instance state transitions (such as starting, stopping
    - The time of the state transition.
 6. Verify the execution prints by checking your Lambda's logs in **CloudWatch**.
 
+<details>
+<summary>📸 Click to view Testing & State Verification Screenshots</summary>
+
+| Testing & Transition | Verification & Logs |
+|:---:|:---:|
+| ![EC2 State Change 1](./images/EC2StateChange1.png) | ![EC2 State Change 2](./images/EC2StateChange2.png) |
+| ![EC2 State Change 3](./images/EC2StateChange3.png) | ![EC2 State Change 4](./images/EC2StateChange4.png) |
+| ![EC2 State Change 5](./images/EC2StateChange5.png) | ![EC2 State Change 6](./images/EC2StateChange6.png) |
+
+</details>
+
 ---
 
-## Example Screenshots
+## Example Screenshots Gallery
 
-1. **`01_ec2_instances.png`**: The EC2 console showing your test instance and its current state.
-2. **`02_eventbridge_rule_active.png`**: The EventBridge console showing your rule configured with EC2 state change pattern and Lambda target.
-3. **`03_lambda_trigger_eventbridge.png`**: The Lambda overview console displaying EventBridge as the trigger source.
-4. **`04_state_email_received.png`**: The email notification in your inbox showing instance state changes (e.g., `STOPPED` or `RUNNING`).
-5. **`05_cloudwatch_state_logs.png`**: The CloudWatch Logs panel showing successful receipt and processing of the event payload.
+All screenshots are categorized and embedded inline within each corresponding setup step above. You can open the dropdown menu in each step to view:
+* **Step 1:** EC2 instance creation and configuration details.
+* **Step 2:** SNS Topic and Email Subscription setup.
+* **Step 3:** IAM policy and Lambda execution role configuration.
+* **Step 4:** Lambda function deployment and Environment Variables configuration.
+* **Step 5:** EventBridge rule creation, event patterns, and Lambda function target mapping.
+* **Step 6:** EC2 instance state-change trigger execution, received email alerts, and CloudWatch logs verification.
