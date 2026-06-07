@@ -132,21 +132,11 @@ There are two options:
 
 ---
 
-## Example Screenshots Gallery
+## Overview
 
-All screenshots are categorized and embedded inline within each corresponding setup step above. You can open the dropdown menu in each step to view the detailed setup progress.
-
-Below is the required final list of screenshots with their designated assignment names:
-
-<details open>
-<summary>📸 Click to view Final Required Screenshots Gallery</summary>
-
-| Description | Screenshot |
-|:---|:---:|
-| **01_s3_bucket_files.png**: S3 bucket overview before cleanup | ![01_s3_bucket_files.png](./images/01_s3_bucket_files.png) |
-| **02_lambda_env_variables.png**: Lambda BUCKET_NAME environment variable | ![02_lambda_env_variables.png](./images/02_lambda_env_variables.png) |
-| **03_lambda_test_execution.png**: Lambda execution results showing success | ![03_lambda_test_execution.png](./images/03_lambda_test_execution.png) |
-| **04_s3_bucket_after_cleanup.png**: S3 bucket overview after cleanup | ![04_s3_bucket_after_cleanup.png](./images/04_s3_bucket_after_cleanup.png) |
-| **05_cloudwatch_logs.png**: CloudWatch logs showing deletion details | ![05_cloudwatch_logs.png](./images/05_cloudwatch_logs.png) |
-
-</details>
+All step-by-step screenshots are embedded inside each respective section above. You can expand the dropdown panels under each step to see:
+- **Step 1**: S3 Bucket details and uploading files.
+- **Step 2**: Granting S3 permissions to Lambda.
+- **Step 3**: Creating the Lambda Function.
+- **Step 4**: Configuring the Lambda Function with Environment Variables.
+- **Step 5**: Testing the Lambda Function and verifying the cleanup.
