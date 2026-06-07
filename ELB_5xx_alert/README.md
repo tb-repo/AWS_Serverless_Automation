@@ -16,23 +16,59 @@ Set up an automated system that checks the CloudWatch metrics of an Elastic Load
    - The suffix is: `app/my-load-balancer/50dc6c495c0c9188`
    *Keep this suffix handy for Step 4.*
 
+<details open>
+<summary>📸 Step 1 Screenshots (ALB Setup & Configuration)</summary>
+
+| | |
+|:---:|:---:|
+| ![ALB Creation 1](./images/ALB_Creation1.png) | ![ALB Creation 2](./images/ALB_Creation2.png) |
+| ![ALB Creation 3](./images/ALB_Creation3.png) | ![ALB Creation 4](./images/ALB_Creation4.png) |
+| ![ALB Creation 5](./images/ALB_Creation5.png) | ![ALB Creation 6](./images/ALB_Creation6.png) |
+| ![ALB Creation 7](./images/ALB_Creation7.png) | |
+
+</details>
+
 ---
 
 ### Step 2: Create or Reuse the SNS Topic
 1. Navigate to the **SNS Console**.
-2. Create a new standard topic (e.g., `ELBAlertTopic`) or reuse your existing subscription topic.
+2. Create a new standard topic (e.g., `ELB5xxAlertTopic`) or reuse your existing subscription topic.
 3. Ensure your email is subscribed to the topic and the status is **Confirmed**.
+
+<details open>
+<summary>📸 Step 2 Screenshots (SNS Topic & Subscription)</summary>
+
+| | |
+|:---:|:---:|
+| ![SNS Topic 1](./images/SNS_Topic1.png) | ![SNS Topic 2](./images/SNS_Topic2.png) |
+| ![SNS Subscription 1](./images/SNS_Subscription1.png) | ![SNS Subscription 2](./images/SNS_Subscription2.png) |
+| ![SNS Subscription 3](./images/SNS_Subscription3.png) | ![SNS Subscription 4](./images/SNS_Subscription4.png) |
+| ![Email Validation](./images/Email_Validation.png) | |
+
+</details>
 
 ---
 
 ### Step 3: Create the IAM Role for Lambda
 1. Navigate to the **IAM Console** -> **Roles** -> **Create role**.
-2. Choose **AWS service** -> **Lambda** as the trusted use case. Click **Next**.
+2. Choose **AWS service** -> **Lambda as the trusted use case. Click Next.**
 3. Create a custom policy (or attach `CloudWatchReadOnlyAccess` and `AmazonSNSFullAccess`) to grant these permissions:
    - `cloudwatch:GetMetricStatistics`
    - `sns:Publish`
    - CloudWatch Logs write permissions (`logs:CreateLogGroup`, `logs:CreateLogStream`, `logs:PutLogEvents`).
 4. Name the role `LambdaCloudWatchSNSRole` and click **Create role**.
+
+<details open>
+<summary>📸 Step 3 Screenshots (IAM Policy & Role Setup)</summary>
+
+| | |
+|:---:|:---:|
+| ![IAM Policy 1](./images/IAM_Policy1.png) | ![IAM Policy 2](./images/IAM_Policy2.png) |
+| ![IAM Policy 3](./images/IAM_Policy3.png) | ![IAM Role 1](./images/IAM_Role1.png) |
+| ![IAM Role 2](./images/IAM_Role2.png) | ![IAM Role 3](./images/IAM_Role3.png) |
+| ![IAM Role 4](./images/IAM_Role4.png) | |
+
+</details>
 
 ---
 
@@ -47,8 +83,19 @@ Set up an automated system that checks the CloudWatch metrics of an Elastic Load
 5. Go to **Configuration** tab -> **Environment variables** -> **Edit** and add:
    - **Key**: `SNS_TOPIC_ARN`, **Value**: `<your-sns-topic-arn>`
    - **Key**: `LOAD_BALANCER_SUFFIX`, **Value**: `<your-extracted-alb-suffix>`
-   - **Key**: `THRESHOLD`, **Value**: `10`
+   - **Key**: `THRESHOLD`, **Value**: `5` (or your preferred value)
 6. Click **Save**.
+
+<details open>
+<summary>📸 Step 4, 5 & 6 Screenshots (Lambda Function, Trigger & Testing)</summary>
+
+| | |
+|:---:|:---:|
+| ![Lambda 1](./images/Lambda1.png) | ![Lambda 2](./images/Lambda2.png) |
+| ![Lambda 3](./images/Lambda3.png) | ![Lambda 4](./images/Lambda4.png) |
+| ![Lambda 5](./images/Lambda5.png) | ![Lambda 6](./images/Lambda6.png) |
+
+</details>
 
 ---
 
@@ -64,7 +111,7 @@ Set up an automated system that checks the CloudWatch metrics of an Elastic Load
 ---
 
 ### Step 6: Test and Simulate 5xx Errors Spike
-Since you won't easily have 10 real 5xx errors on your test load balancer, you can simulate a spike to verify that your email alerts are working:
+Since you won't easily have 5 real 5xx errors on your test load balancer, you can simulate a spike to verify that your email alerts are working:
 
 1. **Option A: Lower the Threshold**
    - Go to your Lambda's **Environment variables** and change the `THRESHOLD` value to `-1`.
@@ -80,10 +127,10 @@ Since you won't easily have 10 real 5xx errors on your test load balancer, you c
 
 ---
 
-## Example Screenshots
+## Example Screenshots Gallery
 
-1. **`01_load_balancer_arn.png`**: The EC2 Load Balancers console page showing the ARN and configuration of your Application Load Balancer.
-2. **`02_lambda_environment_variables.png`**: The Lambda environment variables panel showing `LOAD_BALANCER_SUFFIX`, `SNS_TOPIC_ARN`, and `THRESHOLD`.
-3. **`03_eventbridge_trigger.png`**: The Lambda overview panel showing the EventBridge Rule scheduled trigger.
-4. **`04_simulation_test_results.png`**: The Lambda execution result log showing the trigger message and success status.
-5. **`05_spike_email_received.png`**: A screenshot of the email notification received in your inbox detailing the 5xx error spike.
+All step-by-step screenshots are embedded inline within each corresponding configuration step above. Open the `<details open>` dropdown panels to view:
+* **Step 1:** Application Load Balancer (ALB) creation and details.
+* **Step 2:** SNS Topic creation, email subscription, and validation setup.
+* **Step 3:** IAM Policy and Lambda execution role configuration.
+* **Step 4, 5 & 6:** Lambda setup, environment variables, EventBridge rule triggers, log executions, and email alert delivery.
