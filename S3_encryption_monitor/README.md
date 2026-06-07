@@ -8,7 +8,7 @@ Enhance AWS security posture by automatically auditing all S3 buckets in your ac
 ## Technical Context (Important Note)
 > [!NOTE]
 > Since January 2023, AWS automatically applies basic server-side encryption (SSE-S3) to all new S3 buckets. 
-> To test this Lambda function and simulate an "unencrypted" bucket, you must delete the bucket's encryption configuration using the AWS CLI or AWS CloudShell, which makes `get_bucket_encryption` return a `ServerSideEncryptionConfigurationNotFoundError`.
+> To test this Lambda function and simulate an "unencrypted" bucket, you must delete the bucket's encryption configuration using the AWS CLI or AWS CloudShell, which makes `get_bucket_encryption` return a `ServerSideEncryptionConfigurationNotFoundError`. But this might not be possible as AWS might not allow us to delete encryption even via AWS CLI.
 
 ---
 
